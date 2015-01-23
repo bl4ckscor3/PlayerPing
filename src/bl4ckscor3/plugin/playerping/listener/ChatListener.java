@@ -29,7 +29,7 @@ public class ChatListener implements Listener
 	
 		for(String s : onlinePlayers)
 		{
-			if(event.getMessage().contains(s) && !event.getPlayer().getName().equals(s))
+			if(event.getMessage().contains(s) && !event.getPlayer().getName().equalsIgnoreCase(s))
 			{
 				int arrayPosition = getPlayerArrayPosition(s, onlinePlayerObjects);
 				
