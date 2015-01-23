@@ -32,7 +32,7 @@ public class ChatListener implements Listener
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
 				
 				if(GroupManagerHook.isLoaded())
-					Bukkit.getPlayer(s).sendMessage("<" + GroupManagerHook.getPrefix(event.getPlayer()) + event.getPlayer().getDisplayName() + GroupManagerHook.getSuffix(event.getPlayer()) + "> " + processMessage(event.getMessage(), s));
+					Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + processMessage(event.getMessage(), s));
 				else
 					Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + processMessage(event.getMessage(), s));
 					
