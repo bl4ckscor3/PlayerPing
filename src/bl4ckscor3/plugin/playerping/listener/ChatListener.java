@@ -30,7 +30,7 @@ public class ChatListener implements Listener
 
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + s + " ~0 ~0 ~0 2 0");
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-				Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + processMessage(event.getMessage(), s));
+				Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + event.getMessage().replaceAll(s, ChatColor.YELLOW + s + ChatColor.RESET));
 				return;
 			}
 		}
@@ -65,20 +65,6 @@ public class ChatListener implements Listener
 	
 	private String processMessage(String message, String name)
 	{
-		String[] split = message.split(" ");
-		
-		message = "";
-		
-		for(String s : split)
-		{
-			if(s.equalsIgnoreCase(name))
-				message += ChatColor.YELLOW + s + ChatColor.RESET + " ";
-			else
-				message += s + " ";
-		}
-		
-		message = message.substring(0, message.length() - 1);
-		
-		return message;
+		return message.replaceAll(name, ChatColor.YELLOW + name + ChatColor.RESET);
 	}
 }
