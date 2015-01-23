@@ -9,7 +9,8 @@ public class PlayerPing extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		getServer().getPluginManager().registerEvents(new ChatListener(), this);
+		getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+		Config.createConfig(this);
 		System.out.println("[PlayerPing] v" + getDescription().getVersion() + " enabled!");
 	}
 	

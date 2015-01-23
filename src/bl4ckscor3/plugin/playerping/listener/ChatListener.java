@@ -10,9 +10,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.Plugin;
 
 public class ChatListener implements Listener
 {
+	private Plugin plugin;
+	
+	public ChatListener(Plugin p)
+	{
+		plugin = p;
+	}
+	
 	@EventHandler
 	public void onAsyncPlayerChat(AsyncPlayerChatEvent event)
 	{
@@ -30,7 +38,7 @@ public class ChatListener implements Listener
 
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + s + " ~0 ~0 ~0 2 0");
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-				Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + event.getMessage().replaceAll(s, ChatColor.YELLOW + s + ChatColor.RESET));
+				Bukkit.getPlayer(s).sendMessage(plugin.getConfig().getString("name.prefix") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix") + space() + event.getMessage().replaceAll(s, ChatColor.YELLOW + s + ChatColor.RESET));
 				return;
 			}
 		}
@@ -63,8 +71,11 @@ public class ChatListener implements Listener
 		return -1;
 	}
 	
-	private String processMessage(String message, String name)
+	private String space()
 	{
-		return message.replaceAll(name, ChatColor.YELLOW + name + ChatColor.RESET);
+		if(plugin.getConfig().getBoolean("space"))
+			return " ";
+		else
+			return "";
 	}
 }
