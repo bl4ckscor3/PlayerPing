@@ -30,11 +30,7 @@ public class ChatListener implements Listener
 
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + s + " ~0 ~0 ~0 1 10");
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-				
-				if(GroupManagerHook.isLoaded())
-					Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + processMessage(event.getMessage(), s));
-				else
-					Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + processMessage(event.getMessage(), s));
+				Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + processMessage(event.getMessage(), s));
 					
 				return;
 			}

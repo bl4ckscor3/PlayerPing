@@ -11,7 +11,6 @@ public class PlayerPing extends JavaPlugin
 	public void onEnable()
 	{
 		getServer().getPluginManager().registerEvents(new ChatListener(), this);
-		getServer().getPluginManager().registerEvents(new GroupManagerHook(this), this);
 		System.out.println("[PlayerPing] v" + getDescription().getVersion() + " enabled!");
 	}
 	
