@@ -20,7 +20,7 @@ public class ChatListener implements Listener
 	
 		for(String s : onlinePlayers)
 		{
-			if(event.getMessage().contains(s))
+			if(event.getMessage().contains(s) && !event.getPlayer().getName().equals(s))
 			{
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + s + " ~0 ~0 ~0 1 10");
 				event.setMessage(processMessage(event.getMessage(), s));
