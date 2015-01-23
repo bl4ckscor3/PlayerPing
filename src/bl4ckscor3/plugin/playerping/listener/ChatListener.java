@@ -28,10 +28,9 @@ public class ChatListener implements Listener
 				if(arrayPosition == -1)
 					return;
 
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + s + " ~0 ~0 ~0 1 10");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + s + " ~0 ~0 ~0 2 0");
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
 				Bukkit.getPlayer(s).sendMessage("<" + event.getPlayer().getDisplayName() + "> " + processMessage(event.getMessage(), s));
-					
 				return;
 			}
 		}
