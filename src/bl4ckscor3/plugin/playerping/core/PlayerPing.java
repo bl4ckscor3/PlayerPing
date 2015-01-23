@@ -3,6 +3,7 @@ package bl4ckscor3.plugin.playerping.core;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import bl4ckscor3.plugin.playerping.listener.ChatListener;
+import bl4ckscor3.plugin.playerping.listener.GroupManagerHook;
 
 public class PlayerPing extends JavaPlugin
 {
@@ -10,6 +11,7 @@ public class PlayerPing extends JavaPlugin
 	public void onEnable()
 	{
 		getServer().getPluginManager().registerEvents(new ChatListener(), this);
+		getServer().getPluginManager().registerEvents(new GroupManagerHook(this), this);
 		System.out.println("[PlayerPing] v" + getDescription().getVersion() + " enabled!");
 	}
 	
