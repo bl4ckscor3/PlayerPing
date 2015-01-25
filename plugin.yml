@@ -2,3 +2,4 @@ name: PlayerPing
 main: bl4ckscor3.plugin.playerping.core.PlayerPing
 version: 1.2.1.1
 author: bl4ckscor3
+description: Highlights the name of a player in the chat and plays a sound to them, if they are mentioned.
