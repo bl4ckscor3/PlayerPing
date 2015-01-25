@@ -26,19 +26,23 @@ public class ChatListener implements Listener
 	{
 		List<Player> onlinePlayerObjects = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
 		List<String> onlinePlayers = getOnlinePlayerNames(onlinePlayerObjects);
-	
+
 		for(String s : onlinePlayers)
 		{
-			if(event.getMessage().contains(s) && !event.getPlayer().getName().equalsIgnoreCase(s))
+			String initialS = s;
+			
+			s = s.toLowerCase();
+			
+			if(event.getMessage().toLowerCase().contains(s) && !event.getPlayer().getName().equalsIgnoreCase(initialS))
 			{
-				int arrayPosition = getPlayerArrayPosition(s, onlinePlayerObjects);
+				int arrayPosition = getPlayerArrayPosition(initialS, onlinePlayerObjects);
 				
 				if(arrayPosition == -1)
 					return;
 
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + s + " ~0 ~0 ~0 2 0");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + initialS + " ~0 ~0 ~0 2 0");
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-				Bukkit.getPlayer(s).sendMessage(plugin.getConfig().getString("name.prefix") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix") + space() + event.getMessage().replaceAll(s, ChatColor.YELLOW + s + ChatColor.RESET));
+				Bukkit.getPlayer(initialS).sendMessage(plugin.getConfig().getString("name.prefix") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix") + space() + event.getMessage().replaceAll(initialS, ChatColor.YELLOW + initialS + ChatColor.RESET));
 				return;
 			}
 		}
