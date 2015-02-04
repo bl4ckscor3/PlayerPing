@@ -40,7 +40,7 @@ public class ChatListener implements Listener
 				if(arrayPosition == -1)
 					return;
 
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound random.orb " + initialS + " ~0 ~0 ~0 2 0");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + initialS + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
 				Bukkit.getPlayer(initialS).sendMessage(plugin.getConfig().getString("name.prefix") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix") + space() + event.getMessage().replaceAll(initialS, ChatColor.YELLOW + initialS + ChatColor.RESET));
 				return;

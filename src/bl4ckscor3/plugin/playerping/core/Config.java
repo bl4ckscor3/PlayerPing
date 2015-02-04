@@ -7,10 +7,18 @@ public class Config
 	public static void createConfig(Plugin plugin)
 	{
 		plugin.reloadConfig();
-		plugin.getConfig().options().header("Add the symbol(s) you want to prepend to a player's name under name.prefix, and the ones you like to append under name.suffix. Both are strings.\nE.g.: The vanilla chat format is \"<playerName>\". In this case, name.prefix would default to '<' and name.suffix would default to '>'.\nA space between the suffix and the message is automatically added.\nIf you don't want that to happen, set \"space\" to \"false\"");
+		plugin.getConfig().options().header("Add the symbol(s) you want to prepend to a player's name under \"name.prefix\", and the ones you like to append under \"name.suffix\". Both are strings.\n"
+				+ "E.g.: The vanilla chat format is \"<playerName>\". In this case, \"name.prefix\" would default to '<' and \"name.suffix\" would default to '>'.\n"
+				+ "A space between the suffix and the message is automatically added. If you don't want that to happen, set \"name.space\" to \"false\"\n"
+				+ "\"sound.play\" defines which sound is played to the player if they are mentioned in the chat.\n"
+				+ "\"sound.volume is the volume of the played sound. \"1.0\" defines the client volume.\n"
+				+ "\"sound.pitch\" is the pitch of the played sound. 0.0 means no pitch. Higher values create a higher tone.");
 		plugin.getConfig().addDefault("name.prefix", "<");
 		plugin.getConfig().addDefault("name.suffix", ">");
-		plugin.getConfig().addDefault("space", true);
+		plugin.getConfig().addDefault("name.space", true);
+		plugin.getConfig().addDefault("sound.play", "random.orb");
+		plugin.getConfig().addDefault("sound.volume", 2.0D);
+		plugin.getConfig().addDefault("sound.pitch", 0.0D);
 		plugin.getConfig().options().copyDefaults(true);
 		plugin.saveConfig();
 		System.out.println("[PlayerPing] Configuration created/enabled!");
