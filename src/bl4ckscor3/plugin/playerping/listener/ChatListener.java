@@ -25,39 +25,26 @@ public class ChatListener implements Listener
 	public void onAsyncPlayerChat(AsyncPlayerChatEvent event)
 	{
 		List<Player> onlinePlayerObjects = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
-		List<String> onlinePlayers = getOnlinePlayerNames(onlinePlayerObjects);
 
-		for(String s : onlinePlayers)
+		for(Player p : onlinePlayerObjects)
 		{
-			String initialS = s;
+			String currentPlayerName = p.getName();
+			String lowerCasePlayerName = currentPlayerName.toLowerCase();
 			
-			s = s.toLowerCase();
-			
-			if(event.getMessage().toLowerCase().contains(s) && !event.getPlayer().getName().equalsIgnoreCase(initialS))
+			if(event.getMessage().toLowerCase().contains(lowerCasePlayerName) && !event.getPlayer().getName().equalsIgnoreCase(currentPlayerName))
 			{
-				int arrayPosition = getPlayerArrayPosition(initialS, onlinePlayerObjects);
+				int arrayPosition = getPlayerArrayPosition(currentPlayerName, onlinePlayerObjects);
 				
 				if(arrayPosition == -1)
 					return;
 
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + initialS + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + currentPlayerName + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-				Bukkit.getPlayer(initialS).sendMessage(plugin.getConfig().getString("name.prefix") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix") + space() + event.getMessage().replaceAll(initialS, ChatColor.YELLOW + initialS + ChatColor.RESET));
+				//TODO: Make name yellow if it is not written correctly cased
+				p.sendMessage(plugin.getConfig().getString("name.prefix") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix") + space() + event.getMessage().replaceAll(currentPlayerName, ChatColor.YELLOW + currentPlayerName + ChatColor.RESET));
 				return;
 			}
 		}
-	}
-	
-	private List<String> getOnlinePlayerNames(List<Player> players)
-	{
-		List<String> names = new ArrayList<String>();
-		
-		for(Player p : players)
-		{
-			names.add(p.getName());
-		}
-		
-		return names;
 	}
 	
 	private int getPlayerArrayPosition(String name, List<Player> onlinePlayerObjects)
