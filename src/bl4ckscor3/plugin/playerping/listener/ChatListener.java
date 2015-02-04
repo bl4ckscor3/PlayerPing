@@ -1,6 +1,5 @@
 package bl4ckscor3.plugin.playerping.listener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class ChatListener implements Listener
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + currentPlayerName + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
 				event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
 				//TODO: Make name yellow if it is not written correctly cased
-				p.sendMessage(plugin.getConfig().getString("name.prefix") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix") + space() + event.getMessage().replaceAll(currentPlayerName, ChatColor.YELLOW + currentPlayerName + ChatColor.RESET));
+				p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll(currentPlayerName, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + currentPlayerName + ChatColor.RESET));
 				return;
 			}
 		}
@@ -64,7 +63,7 @@ public class ChatListener implements Listener
 	
 	private String space()
 	{
-		if(plugin.getConfig().getBoolean("space"))
+		if(plugin.getConfig().getBoolean("name.space"))
 			return " ";
 		else
 			return "";
