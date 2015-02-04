@@ -1,11 +1,15 @@
 package bl4ckscor3.plugin.playerping.core;
 
-import org.bukkit.ChatColor;
+import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bl4ckscor3.plugin.playerping.commands.CMDPlayerPing;
 import bl4ckscor3.plugin.playerping.listener.ChatListener;
 
 public class PlayerPing extends JavaPlugin
@@ -32,15 +36,41 @@ public class PlayerPing extends JavaPlugin
 		if(sender instanceof Player)
 			p = (Player)sender;
 
-		if(cmd.getName().equalsIgnoreCase("playerpingreload"))
+		if(cmd.getName().equalsIgnoreCase("playerping"))
 		{
-			if(p.hasPermission("playerping.reload"))
+			if(args.length == 0 || args.length > 2)
+				return false;
+			
+			try
 			{
-				reloadConfig();
-				p.sendMessage("[" + ChatColor.BLUE + getDescription().getName() + ChatColor.RESET + "] Reloaded configuration successfully.");
-				return true;
+				CMDPlayerPing.exe(this, p, args);
 			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return true;
 		}
 		return false;
+	}
+	
+	public static void setupPlayerFile(YamlConfiguration yaml, File f, File folder, Player p) throws IOException
+	{
+		//if the folder doesn't exist, create it
+		if(!folder.exists())
+			folder.mkdirs();
+
+		//if thats the first time the player is executing this command, do this.
+		if(!f.exists())
+		{
+			f.createNewFile();
+			yaml = YamlConfiguration.loadConfiguration(f);
+			yaml.addDefault("name", p.getName());
+			yaml.addDefault("toggle.sound", true);
+			yaml.addDefault("toggle.all", true);
+			yaml.options().copyDefaults(true);
+			yaml.save(f);
+		}
 	}
 }
