@@ -1,12 +1,12 @@
 name: PlayerPing
 main: bl4ckscor3.plugin.playerping.core.PlayerPing
-version: 1.4
+version: 1.4.1
 author: bl4ckscor3
 description: Highlights the name of a player in the chat and plays a sound to them, if they are mentioned.
 commands:
     playerping:
         description: Basic command of the plugin.
-        usage: /<command> <"toggle"|"reload"> ["sound"]
+        usage: /<command> <"toggle"|"reload"> ["sound"|"highlight"]
         aliases: [pp]
 permissions:
     playerping.*:
@@ -14,15 +14,20 @@ permissions:
         children:
             playerping.reload: true
             playerping.toggle.*: true
+            playerping.toggle.highlight: true
             playerping.toggle.sound: true
             playerping.toggle.all: true
     playerping.toggle.*:
         description: Gives access to all toggle commands.
         children:
+            playerping.toggle.highlight: true
             playerping.toggle.sound: true
             playerping.toggle.all: true
     playerping.reload:
         description: Gives permission to reload the configuration from ingame.
+        default: op
+    playerping.toggle.highlight:
+        description: Gives permission to toggle chat highlighting on/off.
         default: op
     playerping.toggle.sound:
         description: Gives permission to toggle the sound on/off.

@@ -53,13 +53,15 @@ public class ChatListener implements Listener
 
 				if(player.getBoolean("toggle.all"))
 				{
-					event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-					
+					if(player.getBoolean("toggle.highlight"))
+					{
+						event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
+						//TODO: Make name colored if it is not written correctly cased
+						p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll(currentPlayerName, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + currentPlayerName + ChatColor.RESET));
+					}
+
 					if(player.getBoolean("toggle.sound"))
 						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + currentPlayerName + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
-					
-					//TODO: Make name colored if it is not written correctly cased
-					p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll(currentPlayerName, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + currentPlayerName + ChatColor.RESET));
 				}
 				return;
 			}

@@ -68,6 +68,7 @@ public class PlayerPing extends JavaPlugin
 			yaml = YamlConfiguration.loadConfiguration(f);
 			yaml.addDefault("name", p.getName());
 			yaml.addDefault("toggle.sound", true);
+			yaml.addDefault("toggle.highlight", true);
 			yaml.addDefault("toggle.all", true);
 			yaml.options().copyDefaults(true);
 			yaml.save(f);

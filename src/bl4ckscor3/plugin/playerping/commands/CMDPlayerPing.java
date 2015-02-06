@@ -85,6 +85,35 @@ public class CMDPlayerPing
 					return;
 				}
 			}
+			else if(args[1].equalsIgnoreCase("highlight"))
+			{
+				if(p.hasPermission("playerping.toggle.highlight"))
+				{
+					File folder = new File(plugin.getDataFolder(), "/playerStorage/");
+					File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() +".yml");
+					YamlConfiguration player = null;
+
+					if(!folder.exists() || !f.exists())
+						PlayerPing.setupPlayerFile(player, f, folder, p);
+
+					player = YamlConfiguration.loadConfiguration(f);
+					player.set("name", p.getName()); //also change name value incase the player changed his name
+
+					if(!player.getBoolean("toggle.highlight"))
+					{
+						player.set("toggle.highlight", true);
+						p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat highlighting " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
+					}
+					else
+					{
+						player.set("toggle.highlight", false);
+						p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat highlighting " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
+					}
+
+					player.save(f);
+					return;
+				}
+			}
 		}
 	}
 }
