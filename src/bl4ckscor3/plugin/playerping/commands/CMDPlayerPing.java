@@ -29,9 +29,14 @@ public class CMDPlayerPing
 			{
 				if(p.hasPermission("playerping.toggle.all"))
 				{
+					File folder = new File(plugin.getDataFolder(), "playerStorage");
 					File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
-					YamlConfiguration player = YamlConfiguration.loadConfiguration(f);
+					YamlConfiguration player = null;
 
+					if(!folder.exists() || !f.exists())
+						PlayerPing.setupPlayerFile(player, f, folder, p);
+
+					player = YamlConfiguration.loadConfiguration(f);
 					player.set("name", p.getName()); //also change name value incase the player changed his name
 
 					//switch around value and send player a message
@@ -55,9 +60,14 @@ public class CMDPlayerPing
 			{
 				if(p.hasPermission("playerping.toggle.sound"))
 				{
+					File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 					File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() +".yml");
-					YamlConfiguration player = YamlConfiguration.loadConfiguration(f);
+					YamlConfiguration player = null;
 
+					if(!folder.exists() || !f.exists())
+						PlayerPing.setupPlayerFile(player, f, folder, p);
+
+					player = YamlConfiguration.loadConfiguration(f);
 					player.set("name", p.getName()); //also change name value incase the player changed his name
 
 					if(!player.getBoolean("toggle.sound"))
@@ -79,9 +89,14 @@ public class CMDPlayerPing
 			{
 				if(p.hasPermission("playerping.toggle.highlight"))
 				{
+					File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 					File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() +".yml");
-					YamlConfiguration player = YamlConfiguration.loadConfiguration(f);
+					YamlConfiguration player = null;
 
+					if(!folder.exists() || !f.exists())
+						PlayerPing.setupPlayerFile(player, f, folder, p);
+
+					player = YamlConfiguration.loadConfiguration(f);
 					player.set("name", p.getName()); //also change name value incase the player changed his name
 
 					if(!player.getBoolean("toggle.highlight"))
