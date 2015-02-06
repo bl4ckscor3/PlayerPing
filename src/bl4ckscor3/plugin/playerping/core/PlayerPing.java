@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import bl4ckscor3.plugin.playerping.commands.CMDPlayerPing;
 import bl4ckscor3.plugin.playerping.listener.ChatListener;
+import bl4ckscor3.plugin.playerping.listener.JoinListener;
 
 public class PlayerPing extends JavaPlugin
 {
@@ -18,6 +19,7 @@ public class PlayerPing extends JavaPlugin
 	public void onEnable()
 	{
 		getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+		getServer().getPluginManager().registerEvents(new JoinListener(this), this);
 		Config.createConfig(this);
 		System.out.println("[PlayerPing] v" + getDescription().getVersion() + " enabled!");
 	}
@@ -55,6 +57,14 @@ public class PlayerPing extends JavaPlugin
 		return false;
 	}
 	
+	/**
+	 * Creating and updating the player file to make sure everything is up to date. Called everytime a player joins.
+	 * 
+	 * @param yaml - The configuration file of the player
+	 * @param f - The file itself
+	 * @param folder - The folder of the file
+	 * @param p - The player who joined.
+	 */
 	public static void setupPlayerFile(YamlConfiguration yaml, File f, File folder, Player p) throws IOException
 	{
 		//if the folder doesn't exist, create it
@@ -73,5 +83,17 @@ public class PlayerPing extends JavaPlugin
 			yaml.options().copyDefaults(true);
 			yaml.save(f);
 		}
+		
+		if(!yaml.contains("name"))
+			yaml.addDefault("name", p.getName());
+		
+		if(!yaml.contains("toggle.sound"))
+			yaml.addDefault("toggle.sound", true);
+
+		if(!yaml.contains("toggle.highlight"))
+			yaml.addDefault("toggle.highlight", true);
+
+		if(!yaml.contains("toggle.all"))
+			yaml.addDefault("toggle.all", true);
 	}
 }
