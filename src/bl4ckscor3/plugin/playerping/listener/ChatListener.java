@@ -66,8 +66,7 @@ public class ChatListener implements Listener
 						{
 							System.out.println("highlight");
 							event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-							//TODO: Make alias colored if it is not written correctly cased
-							p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll(s, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + s + ChatColor.RESET));
+							p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll("(?i)" + s, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + s + ChatColor.RESET));
 						}
 
 						if(player.getBoolean("toggle.sound"))
