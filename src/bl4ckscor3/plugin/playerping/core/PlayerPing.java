@@ -2,6 +2,8 @@ package bl4ckscor3.plugin.playerping.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -64,12 +66,16 @@ public class PlayerPing extends JavaPlugin
 		//if thats the first time the player is executing this command, do this.
 		if(!f.exists())
 		{
+			List<String> alias = new ArrayList<String>();
+			
+			alias.add(p.getName());
 			f.createNewFile();
 			yaml = YamlConfiguration.loadConfiguration(f);
 			yaml.addDefault("name", p.getName());
 			yaml.addDefault("toggle.sound", true);
 			yaml.addDefault("toggle.highlight", true);
 			yaml.addDefault("toggle.all", true);
+			yaml.addDefault("alias", alias);
 			yaml.options().copyDefaults(true);
 			yaml.save(f);
 		}

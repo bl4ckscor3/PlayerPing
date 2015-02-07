@@ -32,38 +32,52 @@ public class ChatListener implements Listener
 
 		for(Player p : onlinePlayerObjects)
 		{
-			String currentPlayerName = p.getName();
-			String lowerCasePlayerName = currentPlayerName.toLowerCase();
-
-			if(event.getMessage().toLowerCase().contains(lowerCasePlayerName) && !event.getPlayer().getName().equalsIgnoreCase(currentPlayerName))
+			if(p.getName().equalsIgnoreCase(event.getPlayer().getName()))
+				continue;
+			
+			File folder = new File(plugin.getDataFolder(), "playerStorage");
+			File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
+			YamlConfiguration player = YamlConfiguration.loadConfiguration(f);
+			List<String> alias = player.getStringList("alias");
+			
+			for(String s : alias)
 			{
-				int arrayPosition = getPlayerArrayPosition(currentPlayerName, onlinePlayerObjects);
-
-				if(arrayPosition == -1)
-					return;
-
-				File folder = new File(plugin.getDataFolder(), "playerStorage");
-				File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
-				YamlConfiguration player = null;
-
-				if(!folder.exists() || !f.exists())
-					PlayerPing.setupPlayerFile(player, f, folder, p);
-
-				player = YamlConfiguration.loadConfiguration(f);
-
-				if(player.getBoolean("toggle.all"))
+				if(event.getMessage().toLowerCase().contains(s))
 				{
-					if(player.getBoolean("toggle.highlight"))
+					System.out.println("contains");
+					int arrayPosition = getPlayerArrayPosition(p.getName(), onlinePlayerObjects);
+
+					if(arrayPosition == -1)
 					{
-						event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
-						//TODO: Make name colored if it is not written correctly cased
-						p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll(currentPlayerName, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + currentPlayerName + ChatColor.RESET));
+						System.out.println(-1);
+						return;
 					}
 
-					if(player.getBoolean("toggle.sound"))
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + currentPlayerName + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
+					if(!folder.exists() || !f.exists())
+					{
+						PlayerPing.setupPlayerFile(player, f, folder, p);
+						System.out.println("setup");
+					}
+
+					if(player.getBoolean("toggle.all"))
+					{
+						System.out.println("all");
+						if(player.getBoolean("toggle.highlight"))
+						{
+							System.out.println("highlight");
+							event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
+							//TODO: Make alias colored if it is not written correctly cased
+							p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll(s, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + s + ChatColor.RESET));
+						}
+
+						if(player.getBoolean("toggle.sound"))
+						{
+							System.out.println("sound");
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + p.getName() + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
+						}
+					}
+					return;
 				}
-				return;
 			}
 		}
 	}

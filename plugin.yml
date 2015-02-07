@@ -1,12 +1,12 @@
 name: PlayerPing
 main: bl4ckscor3.plugin.playerping.core.PlayerPing
-version: 1.4.1
+version: 1.5
 author: bl4ckscor3
 description: Highlights the name of a player in the chat and plays a sound to them, if they are mentioned.
 commands:
     playerping:
         description: Basic command of the plugin.
-        usage: /<command> <"toggle"|"reload"> ["sound"|"highlight"]
+        usage: /<command> <toggle|reload|addAlias|add|removeAlias|remove|listAlias|list> [sound|highlight|aliasName]
         aliases: [pp]
 permissions:
     playerping.*:
