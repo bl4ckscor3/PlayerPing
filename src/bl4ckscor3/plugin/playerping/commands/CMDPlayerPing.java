@@ -174,13 +174,13 @@ public class CMDPlayerPing
 
 		player = YamlConfiguration.loadConfiguration(f);
 		alias = (ArrayList<String>)player.getStringList("alias");
-		
+
 		if(alias.contains(args[1]))
 		{
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] This name was already in your alias list. Use /pp list to see which ones you've added.");
 			return;
 		}
-		
+
 		alias.add(args[1]);
 		player.set("alias", alias);
 		player.save(f);
@@ -189,11 +189,17 @@ public class CMDPlayerPing
 
 	private static void removeAlias(Player p, Plugin plugin, String[] args) throws IOException
 	{
+		if(args[1].equals(p.getName()))
+		{
+			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You cannot remove your name from the list. To turn off the plugin, use /pp toggle.");
+			return;
+		}
+		
 		File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
 		YamlConfiguration player = null;
 		List<String> alias;
-		
+
 		if(!folder.exists() || !f.exists())
 			PlayerPing.setupPlayerFile(player, f, folder, p);
 
@@ -218,18 +224,18 @@ public class CMDPlayerPing
 		YamlConfiguration player = null;
 		List<String> alias;
 		StringBuilder builder = new StringBuilder();
-		
+
 		if(!folder.exists() || !f.exists())
 			PlayerPing.setupPlayerFile(player, f, folder, p);
 
 		player = YamlConfiguration.loadConfiguration(f);
 		alias = (ArrayList<String>)player.getStringList("alias");
-		
+
 		for(String s : alias)
 		{
 			builder.append(s + ", ");
 		}
-		
+
 		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You will get notified of these words: " + builder.toString().substring(0, builder.toString().length() - 2));
 	}
 }
