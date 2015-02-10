@@ -37,8 +37,8 @@ public class ChatListener implements Listener
 			
 			File folder = new File(plugin.getDataFolder(), "playerStorage");
 			File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
-			YamlConfiguration player = YamlConfiguration.loadConfiguration(f);
-			List<String> alias = player.getStringList("alias");
+			YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
+			List<String> alias = yaml.getStringList("alias");
 			
 			for(String s : alias)
 			{
@@ -53,20 +53,18 @@ public class ChatListener implements Listener
 					}
 
 					if(!folder.exists() || !f.exists())
-						PlayerPing.setupPlayerFile(player, f, folder, p);
+						PlayerPing.setupPlayerFile(yaml, f, folder, p);
 
-					if(player.getBoolean("toggle.all"))
+					if(yaml.getBoolean("toggle.all"))
 					{
-						if(player.getBoolean("toggle.highlight"))
+						if(yaml.getBoolean("toggle.highlight"))
 						{
 							event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
 							p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll("(?i)" + s, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + s + ChatColor.RESET));
 						}
 
-						if(player.getBoolean("toggle.sound"))
-						{
+						if(yaml.getBoolean("toggle.sound"))
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + p.getName() + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
-						}
 					}
 					return;
 				}

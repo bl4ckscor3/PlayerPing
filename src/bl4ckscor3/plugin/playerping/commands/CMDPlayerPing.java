@@ -87,27 +87,27 @@ public class CMDPlayerPing
 	{
 		File folder = new File(plugin.getDataFolder(), "playerStorage");
 		File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() + ".yml");
-		YamlConfiguration player = null;
+		YamlConfiguration yaml = null;
 
 		if(!folder.exists() || !f.exists())
-			PlayerPing.setupPlayerFile(player, f, folder, p);
+			PlayerPing.setupPlayerFile(yaml, f, folder, p);
 
-		player = YamlConfiguration.loadConfiguration(f);
-		player.set("name", p.getName()); //also change name value incase the player changed his name
+		yaml = YamlConfiguration.loadConfiguration(f);
+		yaml.set("name", p.getName()); //also change name value incase the player changed his name
 
 		//switch around value and send player a message
-		if(!player.getBoolean("toggle.all"))
+		if(!yaml.getBoolean("toggle.all"))
 		{
-			player.set("toggle.all", true);
+			yaml.set("toggle.all", true);
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat notifications " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
 		}
 		else
 		{
-			player.set("toggle.all", false);
+			yaml.set("toggle.all", false);
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + ChatColor.RESET + "] You turned chat notifications " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
 		}
 
-		player.save(f);
+		yaml.save(f);
 	}
 
 	private static void toggleSound(Player p, Plugin plugin) throws IOException
