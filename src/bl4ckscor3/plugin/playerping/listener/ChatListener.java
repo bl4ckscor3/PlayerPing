@@ -53,9 +53,7 @@ public class ChatListener implements Listener
 					}
 
 					if(!folder.exists() || !f.exists())
-					{
 						PlayerPing.setupPlayerFile(player, f, folder, p);
-					}
 
 					if(player.getBoolean("toggle.all"))
 					{

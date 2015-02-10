@@ -21,13 +21,13 @@ public class PlayerPing extends JavaPlugin
 	{
 		getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 		Config.createConfig(this);
-		System.out.println("[PlayerPing] v" + getDescription().getVersion() + " enabled!");
+		System.out.println("[" + getDescription().getName() + "] v" + getDescription().getVersion() + " enabled!");
 	}
 
 	@Override
 	public void onDisable()
 	{
-		System.out.println("[PlayerPing] v" + getDescription().getVersion() + " disabled!");
+		System.out.println("[" + getDescription().getName() + "] v" + getDescription().getVersion() + " disabled!");
 	}
 
 	@Override
