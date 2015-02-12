@@ -24,6 +24,6 @@ public class Config
 		plugin.getConfig().addDefault("sound.pitch", 0.0D);
 		plugin.getConfig().options().copyDefaults(true);
 		plugin.saveConfig();
-		System.out.println("[PlayerPing] Configuration created/enabled!");
+		System.out.println("[" + plugin.getDescription().getName() + "] Configuration created/enabled!");
 	}
 }
