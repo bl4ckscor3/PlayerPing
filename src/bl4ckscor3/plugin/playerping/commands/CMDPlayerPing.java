@@ -54,7 +54,7 @@ public class CMDPlayerPing
 			}
 			return;
 		}
-		else if(args[0].equalsIgnoreCase("addAlias") || args[0].equalsIgnoreCase("add"))
+		else if(args[0].equalsIgnoreCase("add"))
 		{
 			if(args.length != 2)
 			{
@@ -65,7 +65,7 @@ public class CMDPlayerPing
 			addAlias(p, plugin, args);
 			return;
 		}
-		else if(args[0].equalsIgnoreCase("removeAlias") || args[0].equalsIgnoreCase("remove"))
+		else if(args[0].equalsIgnoreCase("remove"))
 		{
 			if(args.length != 2)
 			{
@@ -76,7 +76,7 @@ public class CMDPlayerPing
 			removeAlias(p, plugin, args);
 			return;
 		}
-		else if(args[0].equalsIgnoreCase("listAlias") || args[0].equalsIgnoreCase("list"))
+		else if(args[0].equalsIgnoreCase("list"))
 		{
 			listAlias(p, plugin);
 			return;

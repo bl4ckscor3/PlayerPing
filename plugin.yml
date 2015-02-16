@@ -1,6 +1,6 @@
 name: PlayerPing
 main: bl4ckscor3.plugin.playerping.core.PlayerPing
-version: 1.5.3
+version: 1.5.4
 author: bl4ckscor3
 description: Highlights the name of a player in the chat and plays a sound to them, if they are mentioned.
 commands:
@@ -35,4 +35,3 @@ permissions:
     playerping.toggle.all:
         description: Gives permission to toggle highlighting AND sound onf/off.
         default: op
-        
