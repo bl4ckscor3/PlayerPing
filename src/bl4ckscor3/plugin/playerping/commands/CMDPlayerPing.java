@@ -83,6 +83,10 @@ public class CMDPlayerPing
 		}
 	}
 
+	/*
+	 * COMMAND EXECUTOR METHODS
+	 */
+
 	private static void toggleAll(Player p, Plugin plugin) throws IOException
 	{
 		File folder = new File(plugin.getDataFolder(), "playerStorage");
@@ -194,7 +198,7 @@ public class CMDPlayerPing
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You cannot remove your name from the list. To turn off the plugin, use /pp toggle.");
 			return;
 		}
-		
+
 		File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
 		YamlConfiguration player = null;
@@ -223,8 +227,8 @@ public class CMDPlayerPing
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
 		YamlConfiguration player = null;
 		List<String> alias;
-		StringBuilder builder = new StringBuilder();
-
+		String words = "";
+		
 		if(!folder.exists() || !f.exists())
 			PlayerPing.setupPlayerFile(player, f, folder, p);
 
@@ -233,9 +237,9 @@ public class CMDPlayerPing
 
 		for(String s : alias)
 		{
-			builder.append(s + ", ");
+			words += s + ", ";
 		}
 
-		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You will get notified of these words: " + builder.toString().substring(0, builder.toString().length() - 2));
+		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You will get notified of these words: " + words.substring(0, words.length() - 2));
 	}
 }

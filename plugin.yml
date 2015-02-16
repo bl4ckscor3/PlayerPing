@@ -35,3 +35,4 @@ permissions:
     playerping.toggle.all:
         description: Gives permission to toggle highlighting AND sound onf/off.
         default: op
+        
