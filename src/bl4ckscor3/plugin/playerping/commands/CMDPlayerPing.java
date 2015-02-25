@@ -159,7 +159,7 @@ public class CMDPlayerPing
 
 		if(alias.contains(args[1]))
 		{
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] This name was already in your alias list. Use /pp list to see which ones you've added.");
+			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was already in your alias list. Use /pp list to see which ones you've added.");
 			return;
 		}
 
@@ -173,7 +173,7 @@ public class CMDPlayerPing
 	{
 		if(args[1].equals(p.getName()))
 		{
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You cannot remove your name from the list. To turn off the plugin, use /pp toggle.");
+			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You cannot remove your own name from the list. To turn off the plugin, use /pp toggle.");
 			return;
 		}
 
@@ -185,7 +185,7 @@ public class CMDPlayerPing
 
 		if(!alias.remove(args[1]))
 		{
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] This name was not in your alias list. Use /pp list to see which ones you've added.");
+			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was not in your alias list. Use /pp list to see which ones you've added.");
 			return;
 		}
 
