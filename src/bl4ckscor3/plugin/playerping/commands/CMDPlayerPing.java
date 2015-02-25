@@ -10,8 +10,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import bl4ckscor3.plugin.playerping.core.PlayerPing;
-
 public class CMDPlayerPing
 {
 	public static void exe(Plugin plugin, Player p, String[] args) throws IOException
@@ -89,14 +87,9 @@ public class CMDPlayerPing
 
 	private static void toggleAll(Player p, Plugin plugin) throws IOException
 	{
-		File folder = new File(plugin.getDataFolder(), "playerStorage");
 		File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() + ".yml");
-		YamlConfiguration yaml = null;
-
-		if(!folder.exists() || !f.exists())
-			PlayerPing.setupPlayerFile(yaml, f, folder, p);
-
-		yaml = YamlConfiguration.loadConfiguration(f);
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
+		
 		yaml.set("name", p.getName()); //also change name value incase the player changed his name
 
 		//switch around value and send player a message
@@ -116,68 +109,53 @@ public class CMDPlayerPing
 
 	private static void toggleSound(Player p, Plugin plugin) throws IOException
 	{
-		File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
-		YamlConfiguration player = null;
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
+		
+		yaml.set("name", p.getName()); //also change name value incase the player changed his name
 
-		if(!folder.exists() || !f.exists())
-			PlayerPing.setupPlayerFile(player, f, folder, p);
-
-		player = YamlConfiguration.loadConfiguration(f);
-		player.set("name", p.getName()); //also change name value incase the player changed his name
-
-		if(!player.getBoolean("toggle.sound"))
+		if(!yaml.getBoolean("toggle.sound"))
 		{
-			player.set("toggle.sound", true);
+			yaml.set("toggle.sound", true);
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat notification sound " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
 		}
 		else
 		{
-			player.set("toggle.sound", false);
+			yaml.set("toggle.sound", false);
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat notification sound " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
 		}
 
-		player.save(f);
+		yaml.save(f);
 	}
 
 	private static void toggleHighlight(Player p, Plugin plugin) throws IOException
 	{
-		File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
-		YamlConfiguration player = null;
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
+		
+		yaml.set("name", p.getName()); //also change name value incase the player changed his name
 
-		if(!folder.exists() || !f.exists())
-			PlayerPing.setupPlayerFile(player, f, folder, p);
-
-		player = YamlConfiguration.loadConfiguration(f);
-		player.set("name", p.getName()); //also change name value incase the player changed his name
-
-		if(!player.getBoolean("toggle.highlight"))
+		if(!yaml.getBoolean("toggle.highlight"))
 		{
-			player.set("toggle.highlight", true);
+			yaml.set("toggle.highlight", true);
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat highlighting " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
 		}
 		else
 		{
-			player.set("toggle.highlight", false);
+			yaml.set("toggle.highlight", false);
 			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat highlighting " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
 		}
 
-		player.save(f);
+		yaml.save(f);
 	}
 
 	private static void addAlias(Player p, Plugin plugin, String[] args) throws IOException
 	{
-		File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
-		YamlConfiguration player = null;
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);;
 		List<String> alias;
 
-		if(!folder.exists() || !f.exists())
-			PlayerPing.setupPlayerFile(player, f, folder, p);
-
-		player = YamlConfiguration.loadConfiguration(f);
-		alias = (ArrayList<String>)player.getStringList("alias");
+		alias = (ArrayList<String>)yaml.getStringList("alias");
 
 		if(alias.contains(args[1]))
 		{
@@ -186,8 +164,8 @@ public class CMDPlayerPing
 		}
 
 		alias.add(args[1]);
-		player.set("alias", alias);
-		player.save(f);
+		yaml.set("alias", alias);
+		yaml.save(f);
 		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was successfully added to your alias list.");
 	}
 
@@ -199,16 +177,11 @@ public class CMDPlayerPing
 			return;
 		}
 
-		File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
-		YamlConfiguration player = null;
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
 		List<String> alias;
 
-		if(!folder.exists() || !f.exists())
-			PlayerPing.setupPlayerFile(player, f, folder, p);
-
-		player = YamlConfiguration.loadConfiguration(f);
-		alias = (ArrayList<String>)player.getStringList("alias");
+		alias = (ArrayList<String>)yaml.getStringList("alias");
 
 		if(!alias.remove(args[1]))
 		{
@@ -216,28 +189,24 @@ public class CMDPlayerPing
 			return;
 		}
 
-		player.set("alias", alias);
-		player.save(f);
+		yaml.set("alias", alias);
+		yaml.save(f);
 		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was successfully removed from your alias list.");
 	}
 
 	private static void listAlias(Player p, Plugin plugin) throws IOException
 	{
-		File folder = new File(plugin.getDataFolder(), "/playerStorage/");
 		File f = new File(plugin.getDataFolder(), "/playerStorage/" + p.getUniqueId() + ".yml");
-		YamlConfiguration player = null;
+		YamlConfiguration player = YamlConfiguration.loadConfiguration(f);
 		List<String> alias;
 		String words = "";
 		
-		if(!folder.exists() || !f.exists())
-			PlayerPing.setupPlayerFile(player, f, folder, p);
-
 		player = YamlConfiguration.loadConfiguration(f);
 		alias = (ArrayList<String>)player.getStringList("alias");
 
 		for(String s : alias)
 		{
-			words += s + ", ";
+			words += ChatColor.GRAY + s + ChatColor.GRAY + ", ";
 		}
 
 		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You will get notified of these words: " + words.substring(0, words.length() - 2));

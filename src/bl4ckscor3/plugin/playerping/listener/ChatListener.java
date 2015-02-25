@@ -14,8 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 
-import bl4ckscor3.plugin.playerping.core.PlayerPing;
-
 public class ChatListener implements Listener
 {
 	private Plugin plugin;
@@ -35,7 +33,6 @@ public class ChatListener implements Listener
 			if(p.getName().equalsIgnoreCase(event.getPlayer().getName()))
 				continue;
 			
-			File folder = new File(plugin.getDataFolder(), "playerStorage");
 			File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
 			YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
 			List<String> alias = yaml.getStringList("alias");
@@ -51,9 +48,6 @@ public class ChatListener implements Listener
 						System.out.println(-1);
 						return;
 					}
-
-					if(!folder.exists() || !f.exists())
-						PlayerPing.setupPlayerFile(yaml, f, folder, p);
 
 					if(yaml.getBoolean("toggle.all"))
 					{
