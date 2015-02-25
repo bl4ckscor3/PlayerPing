@@ -35,7 +35,12 @@ public class PlayerPing extends JavaPlugin
 
 		if(sender instanceof Player)
 			p = (Player)sender;
-
+		else
+		{
+			System.out.println("[" + getDescription().getName() + "] The console cannot use this plugin. Please join the server and execute the command on there.");
+			return true;
+		}
+		
 		if(cmd.getName().equalsIgnoreCase("playerping"))
 		{
 			if(args.length == 0 || args.length > 2)

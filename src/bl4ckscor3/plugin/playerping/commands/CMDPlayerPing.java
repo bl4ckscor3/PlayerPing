@@ -206,7 +206,7 @@ public class CMDPlayerPing
 
 		for(String s : alias)
 		{
-			words += ChatColor.GRAY + s + ChatColor.GRAY + ", ";
+			words += ChatColor.RESET + s + ChatColor.GRAY + ", ";
 		}
 
 		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You will get notified of these words: " + words.substring(0, words.length() - 2));
