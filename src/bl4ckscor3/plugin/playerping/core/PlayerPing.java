@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import bl4ckscor3.plugin.playerping.commands.CMDPlayerPing;
-import bl4ckscor3.plugin.playerping.commands.PlayerLoginListener;
 import bl4ckscor3.plugin.playerping.listener.ChatListener;
+import bl4ckscor3.plugin.playerping.listener.PlayerLoginListener;
 
 public class PlayerPing extends JavaPlugin
 {

@@ -1,4 +1,4 @@
-package bl4ckscor3.plugin.playerping.commands;
+package bl4ckscor3.plugin.playerping.listener;
 
 import java.io.File;
 import java.io.IOException;
