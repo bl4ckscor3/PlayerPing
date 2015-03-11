@@ -17,22 +17,22 @@ import org.bukkit.plugin.Plugin;
 public class ChatListener implements Listener
 {
 	private Plugin plugin;
-
+	
 	public ChatListener(Plugin p)
 	{
 		plugin = p;
 	}
-
+	
 	@EventHandler
 	public void onAsyncPlayerChat(AsyncPlayerChatEvent event) throws IOException
 	{
 		List<Player> onlinePlayerObjects = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
-
+	
 		for(Player p : onlinePlayerObjects)
 		{
 			if(p.getName().equalsIgnoreCase(event.getPlayer().getName()))
 				continue;
-			
+		
 			File f = new File(plugin.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
 			YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
 			List<String> alias = yaml.getStringList("alias");
@@ -42,13 +42,13 @@ public class ChatListener implements Listener
 				if(event.getMessage().contains(s))
 				{
 					int arrayPosition = getPlayerArrayPosition(p.getName(), onlinePlayerObjects);
-
+			
 					if(arrayPosition == -1)
 					{
 						System.out.println(-1);
 						return;
 					}
-
+					
 					if(yaml.getBoolean("toggle.all"))
 					{
 						if(yaml.getBoolean("toggle.highlight"))
@@ -56,7 +56,7 @@ public class ChatListener implements Listener
 							event.getRecipients().remove(onlinePlayerObjects.get(arrayPosition));
 							p.sendMessage(plugin.getConfig().getString("name.prefix").replace("&", "\u00A7") + event.getPlayer().getDisplayName() + plugin.getConfig().getString("name.suffix").replace("&", "\u00A7") + space() + event.getMessage().replaceAll("(?i)" + s, plugin.getConfig().getString("name.color").replace("&", "\u00A7") + s + ChatColor.RESET));
 						}
-
+					
 						if(yaml.getBoolean("toggle.sound"))
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + p.getName() + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
 					}
@@ -69,18 +69,18 @@ public class ChatListener implements Listener
 	private int getPlayerArrayPosition(String name, List<Player> onlinePlayerObjects)
 	{
 		int i = 0;
-
+	
 		for(Player p : onlinePlayerObjects)
 		{
 			if(p.getName().equals(name))
 				return i;
-
+		
 			i++;
 		}
-
+	
 		return -1;
 	}
-
+	
 	private String space()
 	{
 		if(plugin.getConfig().getBoolean("name.space"))
