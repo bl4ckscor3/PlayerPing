@@ -38,7 +38,6 @@ public class PlayerLoginListener implements Listener
 
 			alias.add(event.getPlayer().getName());
 			f.createNewFile();
-			yaml = YamlConfiguration.loadConfiguration(f);
 			yaml.addDefault("name", event.getPlayer().getName());
 			yaml.addDefault("toggle.sound", true);
 			yaml.addDefault("toggle.highlight", true);
@@ -46,6 +45,17 @@ public class PlayerLoginListener implements Listener
 			yaml.addDefault("alias", alias);
 			yaml.options().copyDefaults(true);
 			yaml.save(f);
+			return;
 		}
+		
+		//updating the name
+		String oldName = yaml.getString("name");
+		List<String> alias = yaml.getStringList("alias");
+		
+		alias.remove(oldName);
+		alias.add(event.getPlayer().getName());
+		yaml.set("name", event.getPlayer().getName());
+		yaml.set("alias", alias);
+		yaml.save(f);
 	}
 }
