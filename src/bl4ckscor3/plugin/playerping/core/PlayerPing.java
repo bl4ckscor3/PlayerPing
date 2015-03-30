@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bl4ckscor3.plugin.bl4ckkitCore.core.bl4ckkitCore;
 import bl4ckscor3.plugin.playerping.commands.CMDPlayerPing;
 import bl4ckscor3.plugin.playerping.listener.ChatListener;
 import bl4ckscor3.plugin.playerping.listener.PlayerLoginListener;
@@ -19,13 +20,13 @@ public class PlayerPing extends JavaPlugin
 		getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
 		getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 		Config.createConfig(this);
-		System.out.println("[" + getDescription().getName() + "] v" + getDescription().getVersion() + " enabled!");
+		bl4ckkitCore.getMessageManager().sendEnabledMessage(this);
 	}
 
 	@Override
 	public void onDisable()
 	{
-		System.out.println("[" + getDescription().getName() + "] v" + getDescription().getVersion() + " disabled!");
+		bl4ckkitCore.getMessageManager().sendDisabledMessage(this);
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class PlayerPing extends JavaPlugin
 			p = (Player)sender;
 		else
 		{
-			System.out.println("[" + getDescription().getName() + "] The console cannot use this plugin. Please join the server and execute the command on there.");
+			bl4ckkitCore.getMessageManager().sendDisallowMessage(this);
 			return true;
 		}
 		

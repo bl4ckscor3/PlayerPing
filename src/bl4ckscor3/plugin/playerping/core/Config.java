@@ -2,6 +2,8 @@ package bl4ckscor3.plugin.playerping.core;
 
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.bl4ckkitCore.core.bl4ckkitCore;
+
 public class Config
 {
 	public static void createConfig(Plugin plugin)
@@ -24,6 +26,6 @@ public class Config
 		plugin.getConfig().addDefault("sound.pitch", 0.0D);
 		plugin.getConfig().options().copyDefaults(true);
 		plugin.saveConfig();
-		System.out.println("[" + plugin.getDescription().getName() + "] Configuration created/enabled!");
+		bl4ckkitCore.getMessageManager().sendConsoleMessage(plugin, "Configuration created/enabled!");
 	}
 }

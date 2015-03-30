@@ -10,6 +10,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.bl4ckkitCore.core.bl4ckkitCore;
+
 public class CMDPlayerPing
 {
 	public static void exe(Plugin plugin, Player p, String[] args) throws IOException
@@ -19,7 +21,7 @@ public class CMDPlayerPing
 			if(p.hasPermission("playerping.reload"))
 			{
 				plugin.reloadConfig();
-				p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] Reloaded configuration successfully.");
+				bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "Reloaded configuration successfully.");
 				return;
 			}
 		}
@@ -56,7 +58,7 @@ public class CMDPlayerPing
 		{
 			if(args.length != 2)
 			{
-				p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You need to specify a name to work with.");
+				bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You need to specify a name to work with.");
 				return;
 			}
 
@@ -67,7 +69,7 @@ public class CMDPlayerPing
 		{
 			if(args.length != 2)
 			{
-				p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You need to specify a name to work with.");
+				bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You need to specify a name to work with.");
 				return;
 			}
 
@@ -96,12 +98,12 @@ public class CMDPlayerPing
 		if(!yaml.getBoolean("toggle.all"))
 		{
 			yaml.set("toggle.all", true);
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat notifications " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You turned chat notifications " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
 		}
 		else
 		{
 			yaml.set("toggle.all", false);
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + ChatColor.RESET + "] You turned chat notifications " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You turned chat notifications " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
 		}
 
 		yaml.save(f);
@@ -117,12 +119,12 @@ public class CMDPlayerPing
 		if(!yaml.getBoolean("toggle.sound"))
 		{
 			yaml.set("toggle.sound", true);
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat notification sound " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You turned chat notification sound " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
 		}
 		else
 		{
 			yaml.set("toggle.sound", false);
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat notification sound " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You turned chat notification sound " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
 		}
 
 		yaml.save(f);
@@ -138,12 +140,12 @@ public class CMDPlayerPing
 		if(!yaml.getBoolean("toggle.highlight"))
 		{
 			yaml.set("toggle.highlight", true);
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat highlighting " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You turned chat highlighting " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
 		}
 		else
 		{
 			yaml.set("toggle.highlight", false);
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You turned chat highlighting " + ChatColor.RED + "OFF" + ChatColor.RESET + ".");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You turned chat highlighting " + ChatColor.GREEN + "ON" + ChatColor.RESET + ".");
 		}
 
 		yaml.save(f);
@@ -159,21 +161,21 @@ public class CMDPlayerPing
 
 		if(alias.contains(args[1]))
 		{
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was already in your alias list. Use /pp list to see which ones you've added.");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "\"" + args[1] + "\" was already in your alias list. Use /pp list to see which ones you've added.");
 			return;
 		}
 
 		alias.add(args[1]);
 		yaml.set("alias", alias);
 		yaml.save(f);
-		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was successfully added to your alias list.");
+		bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "\"" + args[1] + "\" was successfully added to your alias list.");
 	}
 
 	private static void removeAlias(Player p, Plugin plugin, String[] args) throws IOException
 	{
 		if(args[1].equals(p.getName()))
 		{
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You cannot remove your own name from the list. To turn off the plugin, use /pp toggle.");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You cannot remove your own name from the list. To turn off the plugin, use /pp toggle.");
 			return;
 		}
 
@@ -185,13 +187,13 @@ public class CMDPlayerPing
 
 		if(!alias.remove(args[1]))
 		{
-			p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was not in your alias list. Use /pp list to see which ones you've added.");
+			bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "\"" + args[1] + "\" was not in your alias list. Use /pp list to see which ones you've added.");
 			return;
 		}
 
 		yaml.set("alias", alias);
 		yaml.save(f);
-		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] \"" + args[1] + "\" was successfully removed from your alias list.");
+		bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "\"" + args[1] + "\" was successfully removed from your alias list.");
 	}
 
 	private static void listAlias(Player p, Plugin plugin) throws IOException
@@ -209,6 +211,6 @@ public class CMDPlayerPing
 			words += ChatColor.RESET + s + ChatColor.GRAY + ", ";
 		}
 
-		p.sendMessage("[" + ChatColor.BLUE + plugin.getDescription().getName() + ChatColor.RESET + "] You will get notified of these words: " + words.substring(0, words.length() - 2));
+		bl4ckkitCore.getMessageManager().sendChatMessage(p, plugin, "You will get notified of these words: " + words.substring(0, words.length() - 2));
 	}
 }
