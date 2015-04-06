@@ -44,10 +44,7 @@ public class ChatListener implements Listener
 					int arrayPosition = getPlayerArrayPosition(p.getName(), onlinePlayerObjects);
 			
 					if(arrayPosition == -1)
-					{
-						System.out.println(-1);
 						return;
-					}
 					
 					if(yaml.getBoolean("toggle.all"))
 					{
