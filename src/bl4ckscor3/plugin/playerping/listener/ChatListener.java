@@ -14,6 +14,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.bl4ckkitCore.core.bl4ckkitCore;
+import bl4ckscor3.plugin.bl4ckkitCore.exception.PluginNotInstalledException;
+
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
+
 public class ChatListener implements Listener
 {
 	private Plugin plugin;
@@ -24,10 +30,14 @@ public class ChatListener implements Listener
 	}
 	
 	@EventHandler
-	public void onAsyncPlayerChat(AsyncPlayerChatEvent event) throws IOException
+	public void onAsyncPlayerChat(AsyncPlayerChatEvent event) throws IOException, PluginNotInstalledException
 	{
 		List<Player> onlinePlayerObjects = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
-	
+		User u = ((Essentials)bl4ckkitCore.getPluginManager().getPlugin(plugin, "Essentials")).getUser(event.getPlayer());
+		
+		if(u.getMuted())
+			return;
+		
 		for(Player p : onlinePlayerObjects)
 		{
 			if(p.getName().equalsIgnoreCase(event.getPlayer().getName()))
