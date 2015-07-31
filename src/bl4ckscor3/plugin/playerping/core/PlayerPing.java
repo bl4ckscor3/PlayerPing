@@ -17,8 +17,7 @@ public class PlayerPing extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
-		getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+		bl4ckkitCore.getPluginManager().registerEvents(this, new PlayerLoginListener(this), new ChatListener(this));
 		Config.createConfig(this);
 		bl4ckkitCore.registerPlugin(this);
 		bl4ckkitCore.getMessageManager().sendEnabledMessage(this);
