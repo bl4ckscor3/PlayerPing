@@ -14,11 +14,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 
-import bl4ckscor3.plugin.bl4ckkitCore.core.bl4ckkitCore;
-import bl4ckscor3.plugin.bl4ckkitCore.exception.PluginNotInstalledException;
-
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
+
+import bl4ckscor3.plugin.bl4ckkitCore.core.bl4ckkitCore;
+import bl4ckscor3.plugin.bl4ckkitCore.exception.PluginNotInstalledException;
 
 public class ChatListener implements Listener
 {
@@ -56,6 +56,9 @@ public class ChatListener implements Listener
 					if(arrayPosition == -1)
 						return;
 					
+					if(((Essentials)bl4ckkitCore.getPluginManager().getPlugin(plugin, "Essentials")).getUser(p).isIgnoredPlayer(event.getPlayer().getName()))
+						return;
+					
 					if(yaml.getBoolean("toggle.all"))
 					{
 						if(yaml.getBoolean("toggle.highlight"))
@@ -67,7 +70,9 @@ public class ChatListener implements Listener
 						if(yaml.getBoolean("toggle.sound"))
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "playsound " + plugin.getConfig().getString("sound.play") + " " + p.getName() + " ~0 ~0 ~0 " + plugin.getConfig().getDouble("sound.volume") + " " + plugin.getConfig().getDouble("sound.pitch"));
 					}
-					return;
+					
+					if(((Essentials)bl4ckkitCore.getPluginManager().getPlugin(plugin, "Essentials")).getUser(p).isAfk())
+						bl4ckkitCore.getMessageManager().sendChatMessage(event.getPlayer(), plugin, "This player is currently afk and may not respond.");
 				}
 			}
 		}
@@ -81,7 +86,7 @@ public class ChatListener implements Listener
 		{
 			if(p.getName().equals(name))
 				return i;
-		
+
 			i++;
 		}
 	
